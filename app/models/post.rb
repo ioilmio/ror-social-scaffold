@@ -8,3 +8,7 @@ class Post < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
 end
+
+def friends_posts
+  @friends_posts = Post.find_by(:user_id == :friend_id)
+end

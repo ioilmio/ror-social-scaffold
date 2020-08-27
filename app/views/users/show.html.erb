@@ -1,10 +1,26 @@
 <section class="user-section">
   <h2><%= "Name: #{@user.name}" %></h2>
+   <ul>
+      <% @user.friends.each do |friend|%>
+        <li>
+         <%= friend.name%>
+         <%= link_to ' | see friend profile', user_path(friend.id)%>
+        </li>  
+      <%end%>
+    </ul>
+  
+  <% if current_user.friend?(@user)%>
+  <%= link_to '<button type="button">Unfriend</button>'.html_safe, friendship_path(@user), method: :delete, data: { confirm: "Are you sure you want to Unfriend"}%>
+  <%elsif current_user != @user%>
   <%= link_to '<button type="button">Send Request</button>'.html_safe, friendships_path(user_id: current_user.id, friend_id: @user.id), method: :post %>
+  
+  <%= link_to 'Timeline', posts_path%>
+  <%end %>
   <article class="timeline">
     <h3>Recent posts:</h3>
     <ul class="posts">
       <%= render @posts %>
     </ul>
+   
   </article>
 </section>
