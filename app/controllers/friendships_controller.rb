@@ -18,17 +18,15 @@ class FriendshipsController < ApplicationController
   end
 
   def reject
-    @friendship = Friendship.find_by(user_id: params[:friendship_id])
+    @friendship = Friendship.find_by(friendship_params[:user_id], friendship_params[:friend_id])
     flash[:alert] = "I don't want to be your friend, #{@friendship.user.name}, sorry" if @friendship.destroy
     redirect_to request.referrer
   end
 
   def destroy
+    @friendship = Friendship.find_by(friendship_params[:user_id], friendship_params[:friend_id])
     @user = User.find(params[:id])
-    @friendship1 = Friendship.find_by(user_id: current_user.id, friend_id: params[:id])
-    @friendship2 = Friendship.find_by(user_id: params[:id], friend_id: current_user.id)
-
-    flash[:alert] = "You are no longer friend with #{@user.name}" if @friendship1.destroy && @friendship2.destroy
+    flash[:alert] = "You are no longer friend with #{@user.name}" if @friendship.destroy
     redirect_to request.referrer
   end
 
