@@ -3,8 +3,7 @@ class PostsController < ApplicationController
 
   def index
     @post = Post.new
-    # timeline_posts
-    current_user.friends_and_own_posts
+    timeline_posts
   end
 
   def create
@@ -20,17 +19,17 @@ class PostsController < ApplicationController
 
   private
 
-  # def timeline_posts
-  #   friends_posts = []
-  #   user_posts = current_user.posts
-  #   friends = current_user.friends
-  #   friends.each do |friend|
-  #     friends_posts += friend.posts
-  #   end
-  #   posts = user_posts + friends_posts
+  def timeline_posts
+    friends_posts = []
+    user_posts = current_user.posts
+    friends = current_user.friends
+    friends.each do |friend|
+      friends_posts += friend.posts
+    end
+    posts = user_posts + friends_posts
 
-  #   @timeline_posts = posts
-  # end
+    @timeline_posts = posts
+  end
 
   def post_params
     params.require(:post).permit(:content)

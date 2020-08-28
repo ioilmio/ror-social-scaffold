@@ -1,7 +1,5 @@
 module UserHelper
   def current_user_friendships(user)
-    # @users = User.all
-    # @users.each do |user|
     if current_user.friend?(user) && user != current_user
       link_to '<button type="button">Unfriend</button>'.html_safe,
               friendship_path(user.id), method: :delete, data: { confirm: 'Are you sure you want to Unfriend' }

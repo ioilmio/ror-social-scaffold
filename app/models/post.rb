@@ -7,9 +7,4 @@ class Post < ApplicationRecord
   scope :ordered_by_most_recent, -> { order(created_at: :desc) }
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
-
-  def friends_and_own_posts
-    Post.where(user: (friends + self))
-    # This will produce SQL query with IN. Something like: select * from posts where user_id IN (1,45,874,43);
-  end
 end
