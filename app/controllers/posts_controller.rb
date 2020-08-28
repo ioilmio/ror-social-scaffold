@@ -20,15 +20,14 @@ class PostsController < ApplicationController
   private
 
   def timeline_posts
-    
-    friends_posts =[]
+    friends_posts = []
     user_posts = current_user.posts
     friends = current_user.friends
     friends.each do |friend|
-      friends_posts += friend.posts 
+      friends_posts += friend.posts
     end
     posts = user_posts + friends_posts
-    
+
     @timeline_posts = posts
   end
 
