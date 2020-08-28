@@ -1,10 +1,10 @@
 <section class="user-section">
   <h2><%= "Name: #{@user.name}" %></h2>
-   <ul>
+    <ul>
       <% @user.friends.each do |friend|%>
         <li>
-         <%= friend.name%>
-         <%= link_to ' | see friend profile', user_path(friend.id)%>
+          <%= friend.name%>
+          <%= link_to ' | see friend profile', user_path(friend.id)%>
         </li>  
       <%end%>
     </ul>
