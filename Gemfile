@@ -43,13 +43,14 @@ gem 'simplecov', require: false, group: :test
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'capybara'
   gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
   gem 'pry'
   gem 'rspec-rails', '~> 4.0.1'
+  gem 'webdrivers'
 end
 
 group :test do
-  gem 'capybara'
   gem 'rspec'
 end
 
