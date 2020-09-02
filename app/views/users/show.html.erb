@@ -8,6 +8,15 @@
         </li>  
       <%end%>
     </ul>
+  <h2>Mutual friends </h2>
+  <ul>
+    <% @mutual_friends.each do |mutual_friend|%>
+
+      <li>
+        <%=mutual_friend.name%>
+      </li>
+    <%end%>
+  </ul>
   
 <%= user_friendship_buttons(@user)%>
   <article class="timeline">
