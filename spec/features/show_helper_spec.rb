@@ -32,4 +32,22 @@ RSpec.describe 'User', type: :feature do
     visit "users/#{user.id}"
     expect(page).to have_content('Unfriend')
   end
+  scenario 'want to send request' do
+    visit new_user_registration_path
+    fill_in 'Name', with: 'Emmanuel'
+    fill_in 'Email', with: 'emmanuel@gmail.com'
+    fill_in 'Password', with: 'password'
+    fill_in 'Password confirmation', with: 'password'
+    click_on 'Sign up'
+    click_on 'Sign out'
+    visit new_user_registration_path
+    fill_in 'Name', with: 'Salvatore'
+    fill_in 'Email', with: 'salva@gmail.com'
+    fill_in 'Password', with: 'password'
+    fill_in 'Password confirmation', with: 'password'
+    click_on 'Sign up'
+    user = User.find_by(name: 'Emmanuel')
+    visit "users/#{user.id}"
+    expect(page).to have_link('Send Request')
+  end
 end
