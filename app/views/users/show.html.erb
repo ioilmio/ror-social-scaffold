@@ -1,9 +1,20 @@
 <section class="user-section">
   <h2><%= "Name: #{@user.name}" %></h2>
+    <ul>
+      <% @user.friends.each do |friend|%>
+        <li>
+          <%= friend.name%>
+          <%= link_to ' | see friend profile', user_path(friend.id)%>
+        </li>  
+      <%end%>
+    </ul>
+  
+<%= user_friendship_buttons(@user)%>
   <article class="timeline">
     <h3>Recent posts:</h3>
     <ul class="posts">
       <%= render @posts %>
     </ul>
+   
   </article>
 </section>
