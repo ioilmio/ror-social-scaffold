@@ -48,6 +48,26 @@ class User < ApplicationRecord
     end
   end
 
+  def mutual_friends(friend, current_user)
+    my_users = User.all
+    current_user_friends = []
+    user_friends = []
+    mutual_friendship = []
+    my_users.each do |user|
+      current_user_friends.push(user) if current_user.friend?(user)
+      user_friends.push(user) if friend.friend?(user)
+    end
+    current_user_friends.each do |user|
+      mutual_friendship.push(user) if user_friends.include?(user)
+
+    end
+    user_friends.each do |user|
+      mutual_friendship.push(user) if current_user_friends.include?(user) && !mutual_friendship.include?(user)
+    end
+    mutual_friendship
+  end
+
+
   def friend?(user)
     friends.include?(user)
   end
