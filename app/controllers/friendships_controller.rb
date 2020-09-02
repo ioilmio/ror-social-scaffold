@@ -29,7 +29,7 @@ class FriendshipsController < ApplicationController
     flash[:alert] = "You are no longer friend with #{@user.name}"
     redirect_to request.referrer
   end
-  
+
   private
 
   def friendship_params

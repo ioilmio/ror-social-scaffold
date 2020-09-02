@@ -59,14 +59,12 @@ class User < ApplicationRecord
     end
     current_user_friends.each do |user|
       mutual_friendship.push(user) if user_friends.include?(user)
-
     end
     user_friends.each do |user|
       mutual_friendship.push(user) if current_user_friends.include?(user) && !mutual_friendship.include?(user)
     end
     mutual_friendship
   end
-
 
   def friend?(user)
     friends.include?(user)

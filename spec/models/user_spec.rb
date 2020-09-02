@@ -78,4 +78,13 @@ RSpec.describe User, type: :model do
       expect(user.friend?(friend)).to be true
     end
   end
+  context 'Unfriending' do
+    it 'should unfriend the friend(user side)' do
+      user = User.create(user_param1)
+      friend = User.create(user_param2)
+      user.friendships.create(user_id: user.id, friend_id: friend.id, confirmed: true)
+      user.unfriend(friend, user)
+      expect(user.friendships.count).to eq(0)
+    end
+  end
 end
