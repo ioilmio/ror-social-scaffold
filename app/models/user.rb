@@ -34,16 +34,16 @@ class User < ApplicationRecord
   end
 
   def unfriend(user, current_user)
-    r = []
+    friends_array = []
     friendship = inverse_friendships.find { |friend| friend.user == user }
     if !friendship.blank?
       friendship.confirmed = nil
       friendship.destroy
     else
       current_user.friends.each do |friend|
-        r.push(friend) if friend == user
-        my = Friendship.where(user_id: current_user.id, friend_id: r.first.id)
-        my.destroy(my.first.id)
+        friends_array.push(friend) if friend == user
+        my_friendship = Friendship.where(user_id: current_user.id, friend_id: friends_array.first.id)
+        my_friendship.destroy(my_friendship.first.id)
       end
     end
   end
