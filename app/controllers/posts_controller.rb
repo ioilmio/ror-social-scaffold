@@ -21,10 +21,10 @@ class PostsController < ApplicationController
 
   def timeline_posts
     friends_posts = []
-    user_posts = current_user.posts
+    user_posts = Post.where(user: current_user)
     friends = current_user.friends
     friends.each do |friend|
-      friends_posts += friend.posts
+      friends_posts += Post.where(user: friend)
     end
     posts = user_posts + friends_posts
 

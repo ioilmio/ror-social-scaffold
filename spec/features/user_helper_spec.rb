@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'User', type: :feature do
-  scenario 'User with pending request' do
+  scenario 'User with pending request', js: true do
     visit new_user_registration_path
     fill_in 'Name', with: 'Emmanuel'
     fill_in 'Email', with: 'emmanuel@gmail.com'
@@ -20,7 +20,7 @@ RSpec.describe 'User', type: :feature do
     expect(page).to have_content('Request pending')
   end
 
-  scenario 'User with confirming request' do
+  scenario 'User with confirming request', js: true do
     visit new_user_registration_path
     fill_in 'Name', with: 'Emmanuel'
     fill_in 'Email', with: 'emmanuel@gmail.com'
@@ -44,7 +44,7 @@ RSpec.describe 'User', type: :feature do
     expect(page).to have_content('Reject')
   end
 
-  scenario 'User with confirming request' do
+  scenario 'User with accept request', js: true do
     visit new_user_registration_path
     fill_in 'Name', with: 'Emmanuel'
     fill_in 'Email', with: 'emmanuel@gmail.com'

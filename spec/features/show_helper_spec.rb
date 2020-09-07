@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'User', type: :feature do
-  scenario 'want to unfriend' do
+  scenario 'want to unfriend', js: true do
     visit new_user_registration_path
     fill_in 'Name', with: 'Emmanuel'
     fill_in 'Email', with: 'emmanuel@gmail.com'
@@ -32,7 +32,7 @@ RSpec.describe 'User', type: :feature do
     visit "users/#{user.id}"
     expect(page).to have_content('Unfriend')
   end
-  scenario 'want to send request' do
+  scenario 'want to send request', js: true do
     visit new_user_registration_path
     fill_in 'Name', with: 'Emmanuel'
     fill_in 'Email', with: 'emmanuel@gmail.com'
