@@ -13,6 +13,7 @@ class FriendshipsController < ApplicationController
   def confirm
     @user = User.find(params[:friendship_id])
     current_user.confirm_friend(@user)
+    Friendship.create!(user_id: current_user.id, friend_id: @user.id, confirmed: true)
     flash[:notice] = "You are now friend with #{@user.name} "
     redirect_to request.referrer
   end
