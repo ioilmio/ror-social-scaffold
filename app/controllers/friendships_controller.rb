@@ -26,9 +26,15 @@ class FriendshipsController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    current_user.unfriend(@user, current_user)
+    friendship = Friendship.find_by(user_id: current_user.id, friend_id: @user.id)
+    other_friendship = Friendship.find_by(user_id: @user.id, friend_id: current_user.id)
+    if friendship
+      friendship.destroy
+    else
+      other_friendship.destroy
+    end
     flash[:alert] = "You are no longer friend with #{@user.name}"
-    redirect_to request.referrer
+    redirect_to users_path
   end
 
   private

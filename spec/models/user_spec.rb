@@ -34,7 +34,7 @@ RSpec.describe User, type: :model do
       expect(user.macro).to eq(:has_many)
     end
     it 'has many inverse_friendships' do
-      user = User.reflect_on_association(:inverse_friendships)
+      user = User.reflect_on_association(:inverted_friendships)
       expect(user.macro).to eq(:has_many)
     end
     it 'should have at least one friend' do
@@ -107,15 +107,6 @@ RSpec.describe User, type: :model do
       friend = User.create(user_param2)
       user.friendships.create(user_id: user.id, friend_id: friend.id, confirmed: true)
       expect(user.friend?(friend)).to be true
-    end
-  end
-  context 'Unfriending' do
-    it 'should unfriend the friend(user side)' do
-      user = User.create(user_param1)
-      friend = User.create(user_param2)
-      user.friendships.create(user_id: user.id, friend_id: friend.id, confirmed: true)
-      user.unfriend(friend, user)
-      expect(user.friendships.count).to eq(0)
     end
   end
 end
