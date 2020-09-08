@@ -7,7 +7,17 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 20 }
 
   has_many :friendships, dependent: :destroy
-  has_many :inverse_friendships, class_name: 'Friendship', foreign_key: :friend_id
+  # has_many :inverse_friendships, class_name: 'Friendship', foreign_key: :friend_id
+
+  # pending_friends
+  has_many :pending_friendships, -> { where confirmed: nil }, class_name: 'Friendship', foreign_key: 'user_id'
+  has_many :pending_friends, through: :pending_friendships, source: :friend
+  # friend_requestes
+  has_many :inverse_friendships, -> { where confirmed: nil }, class_name: 'Friendship', foreign_key: 'friend_id'
+  has_many :friend_requests, through: :inverse_friendships, source: :user
+  # confirm_friends
+  has_many :confirm_friend, -> { where confirmed: true }, class_name: "Friendship"
+  has_many :friends, through: :confirm_friend
 
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -19,13 +29,13 @@ class User < ApplicationRecord
     friends_array.compact
   end
 
-  def pending_friends
-    friendships.map { |friendship| friendship.friend unless friendship.confirmed }.compact
-  end
+  # def pending_friends
+  #   friendships.map { |friendship| friendship.friend unless friendship.confirmed }.compact
+  # end
 
-  def friend_requests
-    inverse_friendships.map { |friendship| friendship.user unless friendship.confirmed }.compact
-  end
+  # def friend_requests
+  #   inverse_friendships.map { |friendship| friendship.user unless friendship.confirmed }.compact
+  # end
 
   def confirm_friend(user)
     friendship = inverse_friendships.find { |friend| friend.user == user }
