@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'User', type: :feature do
-  scenario 'with pending friends' do
+  scenario 'with pending friends', js: true do
     visit new_user_registration_path
     fill_in 'Name', with: 'Emmanuel'
     fill_in 'Email', with: 'emmanuel@gmail.com'
@@ -23,7 +23,7 @@ RSpec.describe 'User', type: :feature do
     expect(page).to have_content('Emmanuel')
   end
 
-  scenario 'with friend request' do
+  scenario 'with friend request', js: true do
     visit new_user_registration_path
     fill_in 'Name', with: 'Emmanuel'
     fill_in 'Email', with: 'emmanuel@gmail.com'
@@ -65,8 +65,9 @@ RSpec.describe 'User', type: :feature do
 
     fill_in 'Email', with: 'emmanuel@gmail.com'
     fill_in 'Password', with: 'password'
-    user = User.second
-    visit "/users/#{user.id}/friend_requests"
+    click_on 'Log in'
+    click_link 'Friend requests'
+
     expect(page).to have_content('Salvatore')
   end
 end

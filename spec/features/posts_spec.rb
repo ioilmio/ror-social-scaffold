@@ -13,5 +13,16 @@ RSpec.describe Post, type: :feature do
       click_on 'Save'
       expect(page).to have_content('test')
     end
+    it 'on index page and is not valid' do
+      visit new_user_registration_path
+      fill_in 'Name', with: 'user1'
+      fill_in 'Email', with: 'user1@mail.com'
+      fill_in 'Password', with: 'password'
+      fill_in 'Password confirmation', with: 'password'
+      click_on 'Sign up'
+      fill_in 'post[content]', with: ''
+      click_on 'Save'
+      expect(page).to have_content("Post could not be saved. Content can't be blank")
+    end
   end
 end
