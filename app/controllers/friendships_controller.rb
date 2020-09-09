@@ -30,7 +30,6 @@ class FriendshipsController < ApplicationController
     other_friendship = Friendship.find_by(user_id: @user.id, friend_id: current_user.id)
     if friendship
       friendship.destroy
-    else
       other_friendship.destroy
     end
     flash[:alert] = "You are no longer friend with #{@user.name}"
