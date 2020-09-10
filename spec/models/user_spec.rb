@@ -29,7 +29,14 @@ RSpec.describe User, type: :model do
       user = User.reflect_on_association(:likes)
       expect(user.macro).to eq(:has_many)
     end
-
+    it 'has many friendships' do
+      user = User.reflect_on_association(:friendships)
+      expect(user.macro).to eq(:has_many)
+    end
+    it 'has many inverse_friendships' do
+      user = User.reflect_on_association(:inverted_friendships)
+      expect(user.macro).to eq(:has_many)
+    end
     it 'should have at least one friend' do
       user1 = User.create(user_param1)
       user2 = User.create(user_param2)
@@ -42,12 +49,36 @@ RSpec.describe User, type: :model do
     end
   end
 
+  context 'destroy related resources' do
+    it 'should remove user posts' do
+      user1 = User.create(user_param1)
+      user1.posts.new(content: 'test').save
+      expect(user1.posts.count).to eq(1)
+      user1.destroy
+      expect(user1.posts.count).to eq(0)
+    end
+    it 'should remove user comments' do
+      user1 = User.create(user_param1)
+      user1.posts.new(content: 'post').save
+      user1.comments.new(post_id: 1, content: 'comment').save
+      user1.destroy
+      expect(user1.comments.count).to eq(0)
+    end
+    it 'should remove user likes' do
+      user1 = User.create(user_param1)
+      user1.posts.new(content: 'post').save
+      user1.likes.new(post_id: 1).save
+      user1.destroy
+      expect(user1.likes.count).to eq(0)
+    end
+  end
+
   context 'Friendships' do
     it 'should return friends' do
       user = User.create(user_param1)
       friend = User.create(user_param2)
       user.friendships.create(user_id: user.id, friend_id: friend.id, confirmed: true)
-      expect(user.friends.empty?).to be false
+      expect(user.friends.count).to eq(1)
     end
 
     it 'should return pending friends' do

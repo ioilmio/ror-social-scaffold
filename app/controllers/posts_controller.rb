@@ -17,19 +17,11 @@ class PostsController < ApplicationController
     end
   end
 
-  private
-
   def timeline_posts
-    friends_posts = []
-    user_posts = current_user.posts
-    friends = current_user.friends
-    friends.each do |friend|
-      friends_posts += friend.posts
-    end
-    posts = user_posts + friends_posts
-
-    @timeline_posts = posts
+    @timeline_posts = Post.where(user_id: current_user) + Post.where(user_id: current_user.friends)
   end
+
+  private
 
   def post_params
     params.require(:post).permit(:content)

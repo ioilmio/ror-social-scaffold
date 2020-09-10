@@ -13,6 +13,7 @@ class FriendshipsController < ApplicationController
   def confirm
     @user = User.find(params[:friendship_id])
     current_user.confirm_friend(@user)
+    Friendship.create!(user_id: current_user.id, friend_id: @user.id, confirmed: true)
     flash[:notice] = "You are now friend with #{@user.name} "
     redirect_to request.referrer
   end
@@ -24,14 +25,15 @@ class FriendshipsController < ApplicationController
   end
 
   def destroy
-    # @friendship = Friendship.find_by(friendship_params[:user_id], friendship_params[:friend_id])
-    # p @friendship
     @user = User.find(params[:id])
-    current_user.unfriend(@user, current_user)
-    # p @user
-    # @friendship.destroy
+    friendship = Friendship.find_by(user_id: current_user.id, friend_id: @user.id)
+    other_friendship = Friendship.find_by(user_id: @user.id, friend_id: current_user.id)
+    if friendship
+      friendship.destroy
+      other_friendship.destroy
+    end
     flash[:alert] = "You are no longer friend with #{@user.name}"
-    redirect_to request.referrer
+    redirect_to users_path
   end
 
   private
