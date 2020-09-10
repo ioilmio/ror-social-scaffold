@@ -9,7 +9,7 @@
 
 ## Live Demo
 
-TBA
+[Social media scaffold](https://ror-social-scaffold.herokuapp.com/)
 
 
 ## Getting Started
