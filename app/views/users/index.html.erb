@@ -1,12 +1,19 @@
 <section class="users-section">
   <ul class="users-list">
     <% @users.each do |user| %>
+    <%if @user != current_user%>
       <li>
-        Name: <%= user.name %>
+      <hr>
+      <%= user.name %>
         <span class="profile-link">
-          <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
+        <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
         </span>
       </li>
+
+      <%= requests_buttons(user)%>
+      <%= current_user_friendships(user)%>
+      <%end%>
+      <span>
     <% end %>
   </ul>
 </section>

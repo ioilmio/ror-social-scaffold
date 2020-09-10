@@ -1,0 +1,5 @@
+
+<%@users.each do |user|%>
+    <%=user.name%>
+    <%= link_to '<button type="button">View Profile</button>'.html_safe, user_path(user)%>
+<%end%>

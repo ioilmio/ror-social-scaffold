@@ -1,0 +1,7 @@
+    <% @users.each do |user|%>
+    
+        <%= user.name %>
+        <%= link_to '<button type="button">Accept</button>'.html_safe, friendship_confirm_path(user), method: :post, class: 'btn-primary' %>     
+        <%= link_to '<button type="button">Reject</button>'.html_safe, friendship_reject_path(user), method: :delete %>
+      
+    <% end %>
